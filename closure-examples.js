@@ -167,6 +167,41 @@ var memorize = function( memory, fn ) {
 // });
 
 
+// Create a listen function
+// that attaches the specified
+// event listener to the
+// specified element, with the
+// with the option to call
+// the specified function
+// on a child of the element
+var listen = function( selector, eventName, fn, child /*optional*/ ) {
+    var parent = document.querySelector( selector ),
+
+        handler = function( event ) {
+            var target;
+
+            if ( child ) {
+                target = parent.querySelector( child );
+                if ( event.target === target )
+                        fn.call( target, event);
+            } else
+                fn.call( parent, event );
+        };
+
+    // console.dir( handler );
+
+    parent.addEventListener( eventName, handler );
+ 
+    return parent;
+};
+// listen('.element1', 'click', function( event ) {
+//     console.log('Yes, click anywhere');
+// });
+// listen('.element1', 'click', function( event ) {
+//     console.log('See, child clicks only!');
+// }, 'p');
+
+
 
 
 /*
